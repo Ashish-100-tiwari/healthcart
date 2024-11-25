@@ -10,6 +10,8 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        lightcolor: "#15FFFB", // Light pink background
+        softWhite: "#FFFFFF",
       },
     },
   },
