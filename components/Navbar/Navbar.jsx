@@ -22,13 +22,13 @@ export default function Navbar({ userName, userRole }) {
             height={60}
             className="rounded-full"
           />
-          <Link href="#" className="text-lg p-3 font-semibold hover:text-pink-700">
+          <Link href={`/`} className="text-lg p-3 font-semibold hover:text-pink-700">
             Home
           </Link>
-          <Link href="#about" className="text-lg font-semibold hover:text-pink-700">
+          <Link href={`/about`} className="text-lg font-semibold hover:text-pink-700">
             About
           </Link>
-          <Link href="#contact" className="text-lg font-semibold hover:text-pink-700">
+          <Link href={`/contact`} className="text-lg font-semibold hover:text-pink-700">
             Contact
           </Link>
         </div>

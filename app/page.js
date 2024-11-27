@@ -14,7 +14,7 @@ export default function Home() {
       try {
         const payload = JSON.parse(atob(token.split(".")[1]));
         setUserName(payload.name);
-        setUserRole(payload.role); // Extract and set the role from the token payload
+        setUserRole(payload.role);
       } catch (error) {
         console.error("Error parsing token:", error);
       }
