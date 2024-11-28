@@ -3,7 +3,7 @@
 ## Overview
 
 HealthCart is an innovative platform designed to assist healthcare professionals and patients with managing health-related data, prescriptions, and user interactions. This project aims to provide a dashboard where doctors can manage prescriptions, view patient information, and interact with a user database. The system implements role-based access control to ensure that different user types (e.g., doctors, admins, patients) have access to appropriate features. The goal of HealthCart is to provide a seamless, efficient, and secure experience for all users involved in the healthcare ecosystem.
-
+Live link :- https://healthcart-sigma.vercel.app/
 ---
 
 ## Goal
