@@ -1,11 +1,27 @@
 "use client";
 
 import Navbar from "@/components/Navbar/Navbar";
-
+import { useState, useEffect } from "react";
 export default function About() {
+ const [userName, setUserName] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setUserName(payload.name);
+        setUserRole(payload.role);
+      } catch (error) {
+        console.error("Error parsing token:", error);
+      }
+    }
+  }, []);
   return (
+    
     <>
-      <Navbar />
+    <Navbar userName={userName} userRole={userRole} />
       <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 pt-32">
         <div className="max-w-4xl bg-white shadow-md rounded-lg p-8">
           <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">

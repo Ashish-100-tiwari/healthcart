@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,7 +16,21 @@ export default function ContactPage() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+const [userName, setUserName] = useState(null);
+const [userRole, setUserRole] = useState(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setUserName(payload.name);
+        setUserRole(payload.role);
+      } catch (error) {
+        console.error("Error parsing token:", error);
+      }
+    }
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -29,7 +43,7 @@ export default function ContactPage() {
 
   return (
     <>
-    <Navbar/>
+    <Navbar userName={userName} userRole={userRole} />
     <div className="bg-gradient-to-r from-pink-200 to-yellow-100 min-h-screen py-12 px-4 pt-32">
       <div className="container mx-auto max-w-4xl">
         <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
