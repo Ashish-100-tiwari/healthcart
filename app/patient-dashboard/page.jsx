@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import { useState, useEffect } from "react";
+import Footer from "@/components/Footer/Footer";
 
 export default function PatientDashboard() {
   const router = useRouter();
@@ -90,6 +91,7 @@ export default function PatientDashboard() {
           </tbody>
         </table>
       </div>
+      <Footer/>
     </>
   );
 }

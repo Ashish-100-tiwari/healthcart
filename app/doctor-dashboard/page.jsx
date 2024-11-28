@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import { useState, useEffect } from "react";
+import Footer from "@/components/Footer/Footer";
 
 export default function DoctorDashboard() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function DoctorDashboard() {
     }
   }, []);
 
-    const fetchUsers = async (token) => {
+  const fetchUsers = async (token) => {
     try {
       const response = await fetch("/api/admin-dashboard", {
         method: "GET",
@@ -55,7 +56,6 @@ export default function DoctorDashboard() {
       console.error("Error fetching users:", error);
     }
   };
-
 
   const handlePrescriptionSubmit = async () => {
     try {
@@ -92,80 +92,94 @@ export default function DoctorDashboard() {
       <div className="p-4 mt-32">
         <h1 className="text-2xl font-bold mb-4">Doctor Dashboard</h1>
         <h2 className="text-xl font-semibold mb-4">Users (Excluding Admins and Yourself)</h2>
-        <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">Name</th>
-              <th className="py-2 px-4 border-b">Email</th>
-              <th className="py-2 px-4 border-b">Role</th>
-              <th className="py-2 px-4 border-b">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 ? (
-              users.map((user, index) => (
-                <tr key={index} className="text-center">
-                  <td className="py-2 px-4 border-b">{user.name}</td>
-                  <td className="py-2 px-4 border-b">{user.email}</td>
-                  <td className="py-2 px-4 border-b">{user.role}</td>
-                  <td className="py-2 px-4 border-b">
-                    <button
-                      onClick={() => {
-                        setSelectedUser(user);
-                        setShowModal(true);
-                      }}
-                      className="bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                      Write Prescription
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+            <thead className="bg-gray-100">
               <tr>
-                <td colSpan="4" className="py-2 px-4 text-center">No users found</td>
+                <th className="py-2 px-4 border-b">Name</th>
+                <th className="py-2 px-4 border-b">Email</th>
+                <th className="py-2 px-4 border-b">Role</th>
+                <th className="py-2 px-4 border-b">Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.length > 0 ? (
+                users.map((user, index) => (
+                  <tr key={index} className="text-center hover:bg-gray-50">
+                    <td className="py-2 px-4 border-b">{user.name}</td>
+                    <td className="py-2 px-4 border-b">{user.email}</td>
+                    <td className="py-2 px-4 border-b">{user.role}</td>
+                    <td className="py-2 px-4 border-b">
+                      <button
+                        onClick={() => {
+                          setSelectedUser(user);
+                          setShowModal(true);
+                        }}
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                      >
+                        Write Prescription
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="py-2 px-4 text-center">No users found</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
-          <div className="bg-white p-8 rounded">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 sm:w-96">
             <h2 className="text-xl font-bold mb-4">Write Prescription for {selectedUser.name}</h2>
-            <div>
-              <label>Disease Name</label>
+            <div className="mb-4">
+              <label className="block text-sm font-semibold">Disease Name</label>
               <input
                 type="text"
                 value={formData.diseaseName}
                 onChange={(e) => setFormData({ ...formData, diseaseName: e.target.value })}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <div>
-              <label>Symptoms</label>
+            <div className="mb-4">
+              <label className="block text-sm font-semibold">Symptoms</label>
               <textarea
                 value={formData.symptoms}
                 onChange={(e) => setFormData({ ...formData, symptoms: e.target.value })}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
             </div>
-            <div>
-              <label>Medicines</label>
+            <div className="mb-4">
+              <label className="block text-sm font-semibold">Medicines</label>
               <textarea
                 value={formData.medicines}
                 onChange={(e) => setFormData({ ...formData, medicines: e.target.value })}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
             </div>
-            <div className="mt-4 flex justify-end">
-              <button onClick={() => setShowModal(false)} className="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
-              <button onClick={handlePrescriptionSubmit} className="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+            <div className="mt-4 flex justify-end space-x-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePrescriptionSubmit}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </div>
       )}
+      <Footer/>
     </>
   );
 }
